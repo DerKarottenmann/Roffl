@@ -1,1 +1,4 @@
-# Roffl
+ProjectX
+
+ProjectX ist eine Problem-Lösungs-Maschine, die ähnlich wie Reddit aus Post von Usern besteht. Die Website ist für Projektideen und deren Umsetzung in verschiedensten Bereichen gedacht. Hierbei posten die Ersteller des Projekts, täglich, wöchentlich, etc. ihren Projektfortschritt, nicht zwingend in einem aufwendig formellen Format, aber so, dass man die Entwicklung des Projektes über die Zeit nachvollziehen kann. Durch bestimmte Features hebt sich ProjectX von anderen reinen Diskussionsforen wie auch Reddit ab. ProjectX sorgt damit auch dafür, dass Ersteller zielgerichteter und produktiver sind, da sie einem angenehmen Druck unterliegen, der durch ihre Community(Supporter) verursacht wird.
+(siehe Obsidian)
