@@ -1,3 +1,13 @@
 .test {
     color: red;
 }
+
+/* Schöner Link */
+.prlink {
+    color: #4a6cf7;
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.25s ease;
+}
+

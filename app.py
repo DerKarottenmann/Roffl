@@ -3,8 +3,8 @@ app = Flask(__name__)
 
 Users = {
     'yannik': {
-        'name': 'Yannik Dangel',
-        'email': 'yannik@example.com'
+        'name': 'Ben Jahu ',
+        'email': 'jahu@example.com'
     }
 }
 
