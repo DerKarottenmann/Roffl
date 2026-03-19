@@ -9,12 +9,12 @@ Users = {
 }
 
 @app.route('/')
-def hello_world():
-    return 'Hello, World!'
+def Mainpage():
+    return render_template('index.html')
 
-@app.route('/text')
-def text():
-    return render_template('text.html')
+@app.route('/description')
+def description():
+    return render_template('description.html')
 
 
 @app.route('/user/<username>')
