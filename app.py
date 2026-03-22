@@ -16,6 +16,9 @@ def Mainpage():
 def description():
     return render_template('description.html')
 
+@app.route('/create')
+def create():
+    return render_template('create.html')
 
 @app.route('/user/<username>')
 def user_profile(username):
@@ -25,6 +28,8 @@ def user_profile(username):
     email = user['email']
 
     return render_template('user_profile.html', name=name, email=email)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

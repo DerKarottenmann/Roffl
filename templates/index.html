@@ -1,17 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style/main.css') }}">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roffl</title>
-</head>
-<body>
-    <div class="top_panel">
-        <img class="logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="Roffl Logo">
-    </div>
+{% extends "base.html" %}
+
+{% block title %}Mainpage{% endblock %}
+
+{% block content %}
+<div class="content">
     <h1>Mainpage</h1>
     <p class="test">Nothing here yet.</p>
     <a class="prlink" href="/description">Learn more</a>
-</body>
-</html>
+</div>
+{% endblock %}
+
+
+
