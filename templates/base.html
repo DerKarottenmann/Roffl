@@ -12,7 +12,12 @@
     <!-- Taskleiste -->
     <div class="top_panel">
         <img class="logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="Roffl Logo">
-        <button class="create_button" onclick="window.location.href='/create'">+</button>
+
+        <!-- rechtsgruppierung -->
+        <div class="top_actions">
+            <button class="create_button" onclick="window.location.href='/create'" aria-label="Create">+</button>
+            <a class="prlink" href="/signup">Sign Up</a>
+        </div>
 
     </div>
 
