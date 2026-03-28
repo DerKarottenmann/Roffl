@@ -1,4 +1,4 @@
-from flask import render_template, Flask, request
+from flask import render_template, Flask, request, url_for, redirect
 from models import db
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -55,14 +55,22 @@ def signup():
     return render_template('signup.html')
 
 
-@app.route('/user/<username>')
-def user_profile(username):
-    # Connect to database
-    user = Users.get(username)
-    name = user['name']
-    email = user['email']
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
 
-    return render_template('user_profile.html', name=name, email=email)
+        # User aus db
+        user = User.query.filter_by(username=username).first()
+
+        if user and check_password_hash(user.password_hash, password):
+            return "Login successful!"
+        else:
+            return "Invalid username or password."
+
+    return render_template('login.html')
+
 
 
 

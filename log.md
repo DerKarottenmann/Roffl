@@ -39,3 +39,8 @@
 24. März 2026
 - Top-Leiste, Create-Button und Sign-Up-Link angelegt und initial gestylt.
 - Aktionen in `top_actions` gruppiert und CSS aktualisiert (runder Create-Button, responsive Anpassungen).
+
+28/29. März 2026
+- Login-System gebaut(ohne Sessions)
+- CSS für Login
+- url-for gelernt und eingebaut
