@@ -44,3 +44,8 @@
 - Login-System gebaut(ohne Sessions)
 - CSS für Login
 - url-for gelernt und eingebaut
+
+31. März 2026
+- Schutzfunktion gegen XSS, SQL Injection
+- Cookies mit Session ID
+- Grundlegendes LoginSys fertig

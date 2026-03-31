@@ -1,13 +1,19 @@
-from flask import render_template, Flask, request, url_for, redirect
+from flask import render_template, Flask, request, url_for, redirect, session
 from models import db
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import User
+import secrets
+
+
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
 db.init_app(app)
 migrate = Migrate(app, db)
+import secrets
+app.secret_key = secrets.token_hex(32)
+
 
 
 Users = {
@@ -65,11 +71,19 @@ def login():
         user = User.query.filter_by(username=username).first()
 
         if user and check_password_hash(user.password_hash, password):
-            return "Login successful!"
+            session.clear()
+            session["user_id"] = user.id
+            session["username"] = user.username
+            session["logged_in"] = True
+            return redirect(url_for('Mainpage'))
         else:
             return "Invalid username or password."
 
     return render_template('login.html')
+@app.route('/logout')
+def logout():
+    session.clear()
+    return render_template('logout.html')
 
 
 
