@@ -1,4 +1,4 @@
-from flask import render_template, Flask, request, url_for, redirect, session
+from flask import render_template, Flask, request, url_for, redirect, session, flash
 from models import db, Entry, Image
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -39,9 +39,17 @@ def create():
             return redirect(url_for('create'))
         title = request.form['title']
         text = request.form['text']
+        images = request.files.getlist('images')
 
-        new_entry = Entry(title=title, text=text, owner=session.get("user_id"))
+        new_entry = Entry(title=title, text=text, owner=session.get("user_id"), created_at=db.func.now())
         db.session.add(new_entry)
+        db.session.flush()  # new_entry.id bekommen
+
+        if images and len(images) > 0:
+            for image in images:
+                new_image = Image(data=image.read(), entry_id=new_entry.id)
+                db.session.add(new_image)
+
         db.session.commit()
 
         return redirect(url_for('Mainpage'))

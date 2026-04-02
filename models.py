@@ -11,14 +11,12 @@ class Entry(db.Model):
     text = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     owner = db.Column(db.String(80), db.ForeignKey("users.id"), nullable=False)
-
     images = db.relationship("Image", backref="entries", cascade="all, delete")
 
 class Image(db.Model):
     __tablename__ = "images"
     id = db.Column(db.Integer, primary_key=True)
-    filename = db.Column(db.String(255), nullable=False)
-
+    data = db.Column(db.LargeBinary, nullable=False)
     entry_id = db.Column(db.Integer, db.ForeignKey("entries.id"), nullable=False)
 
 class User(db.Model):
