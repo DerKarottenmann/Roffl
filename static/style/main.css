@@ -55,6 +55,7 @@ html, body {
     display: flex;
     gap: 12px;
     align-items: center;
+    color: #a4e115;
 }
 
 .top_panel .create_button {
@@ -277,3 +278,101 @@ html, body {
     transform: scale(0.97);
 }
 
+
+.create-container {
+    display: flex;
+    flex-direction: column;      /* H1 über dem Formular */
+    justify-content: flex-start; /* Inhalt beginnt oben */
+    align-items: center;
+    min-height: 80vh;
+    padding: 60px 20px 40px;     /* oben mehr Platz, unten etwas Luft */
+    background: #f5f5f5;
+}
+
+/* Überschrift */
+.create-container h1 {
+    margin-top: 0;
+    margin-bottom: 28px;         /* mehr Abstand zum Formular */
+    font-size: 26px;
+    font-weight: 700;
+    color: #333;
+    text-align: center;
+}
+
+/* Formular */
+.create-container form {
+    background: white;
+    padding: 28px 32px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Labels */
+.create-container label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Inputs & Textarea */
+.create-container input[type="text"],
+.create-container textarea {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.create-container input[type="text"]:focus,
+.create-container textarea:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74,144,226,0.25);
+    outline: none;
+}
+
+/* Submit Button */
+.create-container input[type="submit"] {
+    margin-top: 10px;
+    padding: 12px;
+    background: #4a90e2;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.create-container input[type="submit"]:hover {
+    background: #3b7ac2;
+}
+
+.create-container input[type="submit"]:active {
+    transform: scale(0.97);
+}
+
+/* Textarea */
+.create-container textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Link unter dem Formular */
+.create-container .prlink {
+    margin-top: 12px;
+    color: #4a6cf7;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.25s ease;
+}
+
+.create-container .prlink:hover {
+    color: #3b7ac2;
+}

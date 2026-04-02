@@ -1,5 +1,5 @@
 from flask import render_template, Flask, request, url_for, redirect, session
-from models import db
+from models import db, Entry, Image
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import User
@@ -31,9 +31,23 @@ def Mainpage():
 def description():
     return render_template('description.html')
 
-@app.route('/create')
+@app.route('/create', methods=['GET', 'POST'])
 def create():
+    if request.method == 'POST':
+        if len(request.form['text']) < 25:
+            flash("Text must be at least 25 characters long.")
+            return redirect(url_for('create'))
+        title = request.form['title']
+        text = request.form['text']
+
+        new_entry = Entry(title=title, text=text, owner=session.get("user_id"))
+        db.session.add(new_entry)
+        db.session.commit()
+
+        return redirect(url_for('Mainpage'))
+
     return render_template('create.html')
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():

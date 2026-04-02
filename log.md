@@ -49,3 +49,8 @@
 - Schutzfunktion gegen XSS, SQL Injection
 - Cookies mit Session ID
 - Grundlegendes LoginSys fertig
+
+1. April 2026
+- Create Button funktioniert
+- "Formular" für die Projektideen ausführbar und wird gespeichert
+- CSS für Login verbessert
