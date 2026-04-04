@@ -12,17 +12,23 @@
     <!-- Taskleiste -->
     <div class="top_panel">
         <a href="{{ url_for('Mainpage') }}">
-        <img class="logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="Roffl Logo">
+            <img class="logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="Roffl Logo">
         </a>
+
+        <div class="page-title">
+            {{ title }}
+        </div>
+
+        <div class="right-space"></div>
 
         <!-- rechtsgruppierung -->
         <div class="top_actions">
             <button class="create_button" onclick="window.location.href='/create'" aria-label="Create">+</button>
-            <a class="prlink" href="{{ url_for('signup') }}">Sign Up</a>
             {% if session.logged_in %}
                 <span>Welcome, {{ session.username }}!</span>
                 <a class="prlink" href="{{ url_for('logout') }}">Logout</a>
             {% else %}
+                <a class="prlink" href="{{ url_for('signup') }}">Sign Up</a>
                 <a class="prlink" href="{{ url_for('login') }}">Login</a>
             {% endif %}
         </div>

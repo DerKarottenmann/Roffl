@@ -15,22 +15,14 @@ import secrets
 app.secret_key = secrets.token_hex(32)
 
 
-
-Users = {
-    'yannik': {
-        'name': 'Ben Jahu ',
-        'email': 'jahu@example.com'
-    }
-}
-
 @app.route('/')
 def Mainpage():
     entries = Entry.query.order_by(Entry.created_at.desc()).limit(10).all()
-    return render_template('index.html', entries=entries)
+    return render_template('index.html', entries=entries, title="Mainpage")
 
 @app.route('/description')
 def description():
-    return render_template('description.html')
+    return render_template('description.html', title="Description")
 
 @app.route('/create', methods=['GET', 'POST'])
 def create():
@@ -55,7 +47,7 @@ def create():
 
         return redirect(url_for('Mainpage'))
 
-    return render_template('create.html')
+    return render_template('create.html', title="Create New Entry")
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -81,7 +73,7 @@ def signup():
 
         return "Signup successful! User saved to database."
 
-    return render_template('signup.html')
+    return render_template('signup.html', title="Signup")
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -102,13 +94,13 @@ def login():
         else:
             return "Invalid username or password."
 
-    return render_template('login.html')
+    return render_template('login.html', title="Login")
 
 
 @app.route('/logout')
 def logout():
     session.clear()
-    return render_template('logout.html')
+    return render_template('logout.html', title="Logout")
 
 
 @app.route('/image/<int:image_id>')
