@@ -55,7 +55,11 @@
 - "Formular" für die Projektideen ausführbar und wird gespeichert
 - CSS für Login verbessert
 
-3. April 2026
+2. April 2026
 - Images upload funktioniert
 - mehrere Img hochladbar
+
+3.April 2026
+- Klickbares HomeIcon
+- Projekte werden auf der Mainpage geladen
 

@@ -376,3 +376,31 @@ html, body {
 .create-container .prlink:hover {
     color: #3b7ac2;
 }
+
+
+
+
+
+.feed-container {
+    width: 60%;
+    margin: 40px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.feed-item {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.feed-item:last-child {
+    border-bottom: none;
+}
+
+.feed-image {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-top: 10px;
+}

@@ -25,7 +25,8 @@ Users = {
 
 @app.route('/')
 def Mainpage():
-    return render_template('index.html')
+    entries = Entry.query.order_by(Entry.created_at.desc()).limit(10).all()
+    return render_template('index.html', entries=entries)
 
 @app.route('/description')
 def description():
@@ -102,10 +103,19 @@ def login():
             return "Invalid username or password."
 
     return render_template('login.html')
+
+
 @app.route('/logout')
 def logout():
     session.clear()
     return render_template('logout.html')
+
+
+@app.route('/image/<int:image_id>')
+def get_image(image_id):
+    image = Image.query.get_or_404(image_id)
+    return image.data, 200, {'Content-Type': 'image/jpeg'}
+
 
 
 

@@ -8,6 +8,25 @@
     <p class="test">Nothing here yet.</p>
     <a class="prlink" href="{{ url_for('description') }}">Learn more</a>
 </div>
+
+<div class="feed-container">
+    <h2>Neueste Projekte</h2>
+
+    {% for entry in entries %}
+        <div class="feed-item">
+            <h3>{{ entry.title }}</h3>
+            <p>{{ entry.text }}</p>
+
+            <!-- Bilder anzeigen -->
+            {% for image in entry.images %}
+                <img src="/image/{{ image.id }}" class="feed-image">
+            {% endfor %}
+
+            <small>Erstellt am: {{ entry.created_at }}</small>
+        </div>
+    {% endfor %}
+</div>
+
 {% endblock %}
 
 
