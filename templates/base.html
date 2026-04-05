@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Roffl{% endblock %}</title>
-
     <link rel="stylesheet" href="{{ url_for('static', filename='style/main.css') }}">
 </head>
 
@@ -23,10 +22,16 @@
 
         <!-- rechtsgruppierung -->
         <div class="top_actions">
-            <button class="create_button" onclick="window.location.href='/create'" aria-label="Create">+</button>
+            <button class="create_button" id="create_button" onclick="window.location.href='/create'" aria-label="Create">+</button>
             {% if session.logged_in %}
-                <span>Welcome, {{ session.username }}!</span>
+                <a class="prlink" href="#" id="user_dropdown">{{ session.username }}</a>
                 <a class="prlink" href="{{ url_for('logout') }}">Logout</a>
+
+                <div id="dropdown_menu" class="dropdown-menu">
+                    <a href="/create">Create</a>
+                    <a href="/statistics">Statistics</a>
+                    <a href="{{ url_for('logout') }}">Logout</a>
+                </div>
             {% else %}
                 <a class="prlink" href="{{ url_for('signup') }}">Sign Up</a>
                 <a class="prlink" href="{{ url_for('login') }}">Login</a>
@@ -38,5 +43,6 @@
     <main>
         {% block content %}{% endblock %}
     </main>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>

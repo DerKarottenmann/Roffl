@@ -63,3 +63,13 @@
 - Klickbares HomeIcon
 - Projekte werden auf der Mainpage geladen
 
+4.April 2026
+- Anzeige für Seiten in der TopLeiste
+- Einarbeiten in js
+- Projektweiterplanung
+
+5.April 2026
+- Js Einarbeitung
+- Dropdown Menü für User in Js
+
+
