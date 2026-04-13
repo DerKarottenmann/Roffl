@@ -1,4 +1,4 @@
-const version = "0.1.0";
+const version = "0.1.1";
 console.log(`Roffl Version: ${version}`);
 
 // Dropdown-Menü für den Benutzernamen

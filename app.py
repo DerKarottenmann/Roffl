@@ -108,6 +108,10 @@ def get_image(image_id):
     image = Image.query.get_or_404(image_id)
     return image.data, 200, {'Content-Type': 'image/jpeg'}
 
+@app.route('/statistics')
+def statistics():
+    return render_template('statistics.html', title="Statistics")
+
 
 
 

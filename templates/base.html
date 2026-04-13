@@ -24,12 +24,10 @@
         <div class="top_actions">
             {% if session.logged_in %}
                 <a class="prlink" href="#" id="user_dropdown">{{ session.username }}</a>
-                <a class="prlink" href="{{ url_for('logout') }}">Logout</a>
-
                 <div id="dropdown_menu" class="dropdown-menu">
                     <a href="/create">Create</a>
                     <a href="/statistics">Statistics</a>
-                    <a href="{{ url_for('logout') }}">Logout</a>
+                    <a href="/logout">Logout</a>
                 </div>
             {% else %}
                 <a class="prlink" href="{{ url_for('signup') }}">Sign Up</a>
