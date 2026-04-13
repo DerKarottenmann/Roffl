@@ -22,7 +22,6 @@
 
         <!-- rechtsgruppierung -->
         <div class="top_actions">
-            <button class="create_button" id="create_button" onclick="window.location.href='/create'" aria-label="Create">+</button>
             {% if session.logged_in %}
                 <a class="prlink" href="#" id="user_dropdown">{{ session.username }}</a>
                 <a class="prlink" href="{{ url_for('logout') }}">Logout</a>
