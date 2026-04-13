@@ -79,6 +79,7 @@
 
 12.April 2026
 - Bugfix (CreateButton)
+- Websockets angeschaut
 
 
 
