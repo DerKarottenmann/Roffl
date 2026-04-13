@@ -77,5 +77,8 @@
 - Nginx/Uvicorn eingerichtet und konfiguriert
 - Website in systemctl reingepackt -> dauerhaft online
 
+12.April 2026
+- Bugfix (CreateButton)
+
 
 
