@@ -72,4 +72,10 @@
 - Js Einarbeitung
 - Dropdown Menü für User in Js
 
+7.April 2026
+- Hosten der Website auf lokalem Pi 
+- Nginx/Uvicorn eingerichtet und konfiguriert
+- Website in systemctl reingepackt -> dauerhaft online
+
+
 
