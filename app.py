@@ -11,7 +11,6 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
 db.init_app(app)
 migrate = Migrate(app, db)
-import secrets
 app.secret_key = secrets.token_hex(32)
 
 
