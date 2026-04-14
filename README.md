@@ -5,5 +5,5 @@ Roffl ist eine Problem-Lösungs-Website, die ähnlich wie Reddit aus Post von Us
 Für die Entwicklung:
 
 create venv: python3.12 -m venv venv
-activate venv: source .venv/bin/activate
+activate venv: source venv/bin/activate
 get packages: pip install -r requirements.txt
