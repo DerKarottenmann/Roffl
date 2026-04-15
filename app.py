@@ -3,15 +3,16 @@ from models import db, Entry, Image
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import User
-import secrets
+import dotenv
+import os
 
-
+dotenv.load_dotenv()
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
+app.secret_key = os.getenv("SKEY")
 db.init_app(app)
 migrate = Migrate(app, db)
-app.secret_key = secrets.token_hex(32)
 
 
 @app.route('/')
