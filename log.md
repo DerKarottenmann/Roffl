@@ -1,8 +1,15 @@
 # Roffl – Entwicklungsprotokoll
 
-20.–21. März 2026
-- Feste obere Leiste (`top_panel`) und Logo hinzugefügt.
-- Basis-Styling (`static/style/main.css`) eingerichtet (Hintergrund, Farben, Leistenhöhe).
+## 19. März 2026
+
+- Grundlagen HTML, CSS und Flask erarbeitet; erste Tests mit Routen und Templates durchgeführt.
+
+## 20.–21. März 2026
+
+- Feste obere Leiste (`.top_panel`) und Logo hinzugefügt.
+- Basis-Styling in `static/style/main.css` eingerichtet (Hintergrund, Farben, Leistenhöhe).
+
+## 22. März 2026
 
 - `base.html` als globales Layout eingerichtet; Inhalts-Templates erstellt.
 - Create-Button (`+`) in die Top-Leiste integriert.
