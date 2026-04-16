@@ -21,6 +21,8 @@
             {% endfor %}
 
             <small>Erstellt am: {{ entry.created_at }}</small>
+            <small>Von: {{ entry.owner_user.username }} </small>
+
         </div>
     {% endfor %}
 </div>

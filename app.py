@@ -33,8 +33,9 @@ def create():
         title = request.form['title']
         text = request.form['text']
         images = request.files.getlist('images')
+        user_id = session.get("user_id")
 
-        new_entry = Entry(title=title, text=text, owner=session.get("user_id"), created_at=db.func.now())
+        new_entry = Entry(title=title, text=text, owner=user_id, created_at=db.func.now())
         db.session.add(new_entry)
         db.session.flush()  # new_entry.id bekommen
 

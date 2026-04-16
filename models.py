@@ -11,7 +11,7 @@ class Entry(db.Model):
     text = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     owner = db.Column(db.String(80), db.ForeignKey("users.id"), nullable=False)
-    images = db.relationship("Image", backref="entries", cascade="all, delete")
+    images = db.relationship("Image", backref="entry", cascade="all, delete")
 
 class Image(db.Model):
     __tablename__ = "images"
@@ -25,3 +25,4 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
+    entries = db.relationship("Entry", backref="owner_user", cascade="all, delete")
