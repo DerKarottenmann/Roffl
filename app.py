@@ -1,10 +1,12 @@
-from flask import render_template, Flask, request, url_for, redirect, session, flash
+from flask import render_template, Flask, request, url_for, redirect, session, flash, Response
 from models import db, Entry, Image
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import User
 import dotenv
 import os
+import time
+import json
 
 dotenv.load_dotenv()
 
@@ -114,7 +116,21 @@ def statistics():
     return render_template('statistics.html', title="Statistics")
 
 
+@app.route('/stream')
+def stream():
+    print("SSE: generating data...")
+    def generate():
+        with app.app_context():
+            while True:
+                dic = []
+                entries = Entry.query.order_by(Entry.created_at.desc()).limit(1).all()
+                for entry in entries:
+                    dic.append({"Titel": entry.title, "Text": entry.text})
+                sse_data = json.dumps(dic)
+                yield f"data: {sse_data}\n\n"
+                time.sleep(5)
 
+    return Response(generate(), mimetype="text/event-stream")
 
 
 if __name__ == '__main__':

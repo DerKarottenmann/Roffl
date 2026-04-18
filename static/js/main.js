@@ -22,4 +22,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+//SSE
+const source = new EventSource('/stream')
+function onMessage(event) {
+    console.log(event.data);
+}
+source.onmessage = onMessage;
+
+
+
 

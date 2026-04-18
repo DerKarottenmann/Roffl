@@ -81,3 +81,25 @@
 
 - Bugfix am Create-Button.
 - WebSockets recherchiert (Einarbeitung).
+
+## 16. April 2026
+
+- Recherche zu Polling, SSE und WebSockets für Live-Updates auf der Mainpage; Entscheidung für SSE.
+- Wechsel von synchronem Gunicorn-Worker zu Gevent-Worker (`-w 4 -k gevent --worker-connections 1000`), `gevent` in `requirements.txt` ergänzt.
+- systemd-Service `flaskapp.service` entsprechend angepasst.
+- Nginx: `client_max_body_size 10M` in `sites-enabled/flaskapp` gesetzt (Fehler 413 bei Bild-Uploads behoben).
+- `.env` auf dem Raspi erstellt, `SECRET_KEY` via `secrets.token_hex(16)` generiert.
+- Datenbank auf dem Raspi initialisiert (`flask db upgrade`).
+
+## 17. April 2026
+
+- `app.secret_key` auf `os.getenv("SKEY")` umgestellt (Sessions bleiben nach Restart gültig).
+- `python-dotenv` integriert.
+
+## 18. April 2026
+
+- SSE-Endpoint `/stream` in `app.py` implementiert: Generator-Funktion mit `yield`, `Response(..., mimetype="text/event-stream")`, Entries als JSON via `json.dumps()`.
+- `with app.app_context():` hinzugefügt, damit DB-Zugriffe außerhalb der Request-Phase funktionieren.
+- Client-seitig `EventSource('/stream')` in `static/js/main.js` mit `onmessage`-Handler eingebaut.
+- Nginx-Buffering-Problem gelöst: `proxy_buffering off;` und `proxy_cache off;` ergänzt (Status 499 behoben).
+- SSE funktioniert stabil: Daten kommen alle 5 Sekunden in der Browser-Konsole an.
