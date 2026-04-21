@@ -120,15 +120,18 @@ def statistics():
 def stream():
     print("SSE: generating data...")
     def generate():
+        last_id = 0
         with app.app_context():
             while True:
                 dic = []
-                entries = Entry.query.order_by(Entry.created_at.desc()).limit(1).all()
-                for entry in entries:
-                    dic.append({"Titel": entry.title, "Text": entry.text})
-                sse_data = json.dumps(dic)
-                yield f"data: {sse_data}\n\n"
-                time.sleep(5)
+                entries = Entry.query.filter(Entry.id > last_id).order_by(Entry.created_at.desc()).limit(15).all()
+                if entries:
+                    last_id = max(entries, key=lambda e: e.id).id
+                    for entry in entries:
+                        dic.append({"Titel": entry.title, "Text": entry.text})
+                    sse_data = json.dumps(dic)
+                    yield f"data: {sse_data}\n\n"
+                time.sleep(1)
 
     return Response(generate(), mimetype="text/event-stream")
 
