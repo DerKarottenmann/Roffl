@@ -120,9 +120,14 @@ def statistics():
 def stream():
     print("SSE: generating data...")
     def generate():
-        last_id = 0
         with app.app_context():
+            entry = Entry.query.order_by(Entry.id.desc()).limit(1).first()
+            if entry is None:
+                last_id = 0
+            else:
+                last_id = entry.id
             while True:
+                db.session.expire_all()
                 dic = []
                 entries = Entry.query.filter(Entry.id > last_id).order_by(Entry.created_at.desc()).limit(15).all()
                 if entries:

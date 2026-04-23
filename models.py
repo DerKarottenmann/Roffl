@@ -12,6 +12,7 @@ class Entry(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     owner = db.Column(db.String(80), db.ForeignKey("users.id"), nullable=False)
     images = db.relationship("Image", backref="entry", cascade="all, delete")
+    #problems = db.Column(db.Text, nullable=True)
 
 class Image(db.Model):
     __tablename__ = "images"
