@@ -121,19 +121,26 @@ def stream():
     print("SSE: generating data...")
     def generate():
         with app.app_context():
-            entry = Entry.query.order_by(Entry.id.desc()).limit(1).first()
-            if entry is None:
-                last_id = 0
+            dic = []
+            initial_pull = Entry.query.order_by(Entry.created_at.desc()).limit(20).all()
+            if initial_pull:
+                last_id = max(initial_pull, key=lambda p: p.id).id
+                for entry in initial_pull:
+                            image_urls = [f"/image/{image.id}" for image in entry.images]
+                            dic.append({"Titel": entry.title, "Text": entry.text, "Image": image_urls})
+                yield f"data: {json.dumps(dic)}\n\n"
             else:
-                last_id = entry.id
+                last_id = 0
+
             while True:
                 db.session.expire_all()
                 dic = []
-                entries = Entry.query.filter(Entry.id > last_id).order_by(Entry.created_at.desc()).limit(15).all()
+                entries = Entry.query.filter(Entry.id > last_id).order_by(Entry.created_at.desc()).limit(20).all()
                 if entries:
                     last_id = max(entries, key=lambda e: e.id).id
                     for entry in entries:
-                        dic.append({"Titel": entry.title, "Text": entry.text})
+                        image_urls = [f"/image/{image.id}" for image in entry.images]
+                        dic.append({"Titel": entry.title, "Text": entry.text, "Image": image_urls})
                     sse_data = json.dumps(dic)
                     yield f"data: {sse_data}\n\n"
                 time.sleep(1)
@@ -143,3 +150,6 @@ def stream():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+

@@ -29,12 +29,18 @@ function onMessage(event) {
     console.log(event.data);
     d = JSON.parse(event.data)
     for (const entry of d){
+        const imgs = entry.Image.map(url => `<img class="feed-image" src="${url}">`).join("");
         const html = `<div class="feed-item">
             <h3>${entry.Titel}</h3>
             <p>${entry.Text}</p>
+            ${imgs}
         </div>`
         place.insertAdjacentHTML("afterbegin", html)
     }
+}
+
+source.onopen = function() {
+    place.innerHTML = "";
 }
 
 source.onmessage = onMessage;
