@@ -74,7 +74,10 @@ def signup():
         db.session.add(new_user)
         db.session.commit()
 
-        return "Signup successful! User saved to database."
+        session["user_id"] = new_user.id
+        session["username"] = username
+        session["logged_in"] = True
+        return redirect(url_for('Mainpage'))
 
     return render_template('signup.html', title="Signup")
 
@@ -146,6 +149,12 @@ def stream():
                 time.sleep(1)
 
     return Response(generate(), mimetype="text/event-stream")
+
+@app.cli.command("reset-db")
+def reset_db():
+    db.drop_all()
+    db.create_all()
+    print("Datenbank zurückgesetzt!")
 
 
 if __name__ == '__main__':
