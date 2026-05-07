@@ -4,15 +4,17 @@ import uuid
 
 db = SQLAlchemy()
 
+
 class Entry(db.Model):
     __tablename__ = "entries"
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
     text = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    owner = db.Column(db.String(80), db.ForeignKey("users.id"), nullable=False)
-    images = db.relationship("Image", backref="entry", cascade="all, delete")
-    #problems = db.Column(db.Text, nullable=True)
+    owner_id = db.Column(db.String(36), db.ForeignKey("users.id"), nullable=False)
+    project_id = db.Column(db.Integer, db.ForeignKey("projects.id"), nullable=True)
+    images = db.relationship("Image", backref="entry", cascade="all, delete-orphan")
+
 
 class Image(db.Model):
     __tablename__ = "images"
@@ -20,10 +22,20 @@ class Image(db.Model):
     data = db.Column(db.LargeBinary, nullable=False)
     entry_id = db.Column(db.Integer, db.ForeignKey("entries.id"), nullable=False)
 
+
 class User(db.Model):
     __tablename__ = "users"
     id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
-    entries = db.relationship("Entry", backref="owner_user", cascade="all, delete")
+    entries = db.relationship("Entry", backref="owner_user", cascade="all, delete-orphan")
+    projects = db.relationship("Project", backref="owner", cascade="all, delete-orphan")
+
+
+class Project(db.Model):
+    __tablename__ = "projects"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    owner_id = db.Column(db.String(36), db.ForeignKey("users.id"), nullable=False)
+    posts = db.relationship("Entry", backref="project", cascade="all, delete-orphan")

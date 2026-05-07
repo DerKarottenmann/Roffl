@@ -114,8 +114,12 @@ def get_image(image_id):
     image = Image.query.get_or_404(image_id)
     return image.data, 200, {'Content-Type': 'image/jpeg'}
 
+
 @app.route('/statistics')
 def statistics():
+    if not session.get("logged_in"):
+        return redirect(url_for("login"))
+
     return render_template('statistics.html', title="Statistics")
 
 
@@ -149,6 +153,12 @@ def stream():
                 time.sleep(1)
 
     return Response(generate(), mimetype="text/event-stream")
+
+
+
+
+
+
 
 @app.cli.command("reset-db")
 def reset_db():
