@@ -34,6 +34,8 @@ function onMessage(event) {
             <h3>${entry.Titel}</h3>
             <p>${entry.Text}</p>
             ${imgs}
+            <small>Erstellt am: ${entry.CreatedAt}</small>
+            <small>Von: ${entry.Username}</small>
         </div>`
         place.insertAdjacentHTML("afterbegin", html)
     }

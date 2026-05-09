@@ -3,6 +3,23 @@
 {% block title %}Statistics{% endblock %}
 
 {% block content %}
+<div class="stats-container">
     <h1>Statistics</h1>
-    <p>Here you can find various statistics about the entries.</p>
+    <h2>Posts</h2>
+    {% if entries %}
+        {% for entry in entries %}
+            <details class="stats-item">
+                <summary>{{ entry.title }}</summary>
+                <p>{{ entry.text }}</p>
+                {% for img in entry.images %}
+                    <img src="/image/{{ img.id }}" class="feed-image">
+                {% endfor %}
+
+                <small>Erstellt am: {{ entry.created_at.strftime('%d.%m.%Y %H:%M') }}</small>
+            </details>
+        {% endfor %}
+    {% else %}
+        <p class="stats-empty">Noch keine Posts</p>
+    {% endif %}
+</div>
 {% endblock %}

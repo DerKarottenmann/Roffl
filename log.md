@@ -109,3 +109,12 @@
 - Bugfix Login-Session nach Signup: In `app.py` wird nach erfolgreicher Registrierung direkt eine Session gesetzt (`session["user_id"]`, `session["username"]`, `session["logged_in"]`) und per `redirect(url_for('Mainpage'))` zur Hauptseite weitergeleitet (statt der bisherigen Klartext-Antwort).
 - Neuer Flask-CLI-Befehl `flask reset-db` ergänzt: führt `db.drop_all()` und `db.create_all()` aus, um die Datenbank im Entwicklungsbetrieb schnell zurückzusetzen.
 - Version in `static/js/main.js` von `0.1.1` auf `0.1.2` erhöht.
+
+## 6.Mai
+
+- Statistics Grundlagen gebaut
+
+## 8.Mai
+
+- Statistics weitergebaut
+- CSS

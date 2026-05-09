@@ -119,8 +119,9 @@ def get_image(image_id):
 def statistics():
     if not session.get("logged_in"):
         return redirect(url_for("login"))
+    entries = Entry.query.filter_by(owner_id=session.get("user_id")).order_by(Entry.created_at.desc()).all()
 
-    return render_template('statistics.html', title="Statistics")
+    return render_template('statistics.html', entries=entries, title="Statistics")
 
 
 @app.route('/stream')
@@ -147,7 +148,13 @@ def stream():
                     last_id = max(entries, key=lambda e: e.id).id
                     for entry in entries:
                         image_urls = [f"/image/{image.id}" for image in entry.images]
-                        dic.append({"Titel": entry.title, "Text": entry.text, "Image": image_urls})
+                        dic.append({
+                            "Titel": entry.title,
+                            "Text": entry.text,
+                            "Image": image_urls,
+                            "CreatedAt": entry.created_at.strftime('%d.%m.%Y %H:%M'),
+                            "Username": entry.owner_user.username,
+                        })
                     sse_data = json.dumps(dic)
                     yield f"data: {sse_data}\n\n"
                 time.sleep(1)
