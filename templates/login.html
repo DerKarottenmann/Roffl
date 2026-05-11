@@ -2,7 +2,19 @@
 
 {% block title %}Login - Roffl{% endblock %}
 
+
 {% block content %}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
 <div class="login-container">
     <h2>Login to Roffl</h2>
     <form method="POST" action="{{ url_for('login') }}">

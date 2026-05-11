@@ -98,7 +98,8 @@ def login():
             session["logged_in"] = True
             return redirect(url_for('Mainpage'))
         else:
-            return "Invalid username or password."
+            flash("Wrong Password or Username")
+            return redirect(url_for('login'))
 
     return render_template('login.html', title="Login")
 
