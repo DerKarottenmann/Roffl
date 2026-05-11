@@ -37,5 +37,6 @@ class Project(db.Model):
     __tablename__ = "projects"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(500), nullable=False)
     owner_id = db.Column(db.String(36), db.ForeignKey("users.id"), nullable=False)
     posts = db.relationship("Entry", backref="project", cascade="all, delete-orphan")

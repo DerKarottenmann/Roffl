@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Create{% endblock %}
+{% block title %}Create Project{% endblock %}
 
 {% block content %}
 {% if not session.logged_in %}
@@ -12,18 +12,12 @@
 {% else %}
 <div class="create-container">
    
-    <form method="POST" action="{{ url_for('create') }}" enctype="multipart/form-data">
-        <label for="title">Title:</label>
+    <form method="POST" action="{{ url_for('create_project') }}" enctype="multipart/form-data">
+        <label for="title">Projectname:</label>
         <input type="text" id="title" name="title" required>
         <br>
-        <label for="text">Content:</label>
+        <label for="text">Description:</label>
         <textarea id="text" name="text" minlength="25" required></textarea>
-        <br>
-        <label for="images">Upload Images:</label>
-        <input type="file" id="images" name="images" accept="image/*" multiple>
-        <br>
-        <label for="text">Select Project:</label>
-        <input type="text" id="project" name="project" required>
         <br>
         <input type="submit" value="Create">
         <a class="prlink" href="{{ url_for('Mainpage') }}">Go back to homepage</a>

@@ -1,5 +1,5 @@
 from flask import render_template, Flask, request, url_for, redirect, session, flash, Response
-from models import db, Entry, Image
+from models import db, Entry, Image, Project
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import User
@@ -36,6 +36,7 @@ def create():
         text = request.form['text']
         images = request.files.getlist('images')
         user_id = session.get("user_id")
+        project = session.get("project")
 
         new_entry = Entry(title=title, text=text, owner_id=user_id, created_at=db.func.now())
         db.session.add(new_entry)
@@ -51,6 +52,24 @@ def create():
         return redirect(url_for('Mainpage'))
 
     return render_template('create.html', title="Create New Entry")
+
+
+@app.route('/projects', methods=['GET', 'POST'])
+def create_project():
+    if request.method == 'POST':
+        title = request.form['title']
+        text = request.form['text']
+        user_id = session.get("user_id")
+
+        new_entry = Project(name=title, description=text, owner_id=user_id)
+        db.session.add(new_entry)
+        db.session.flush()  # new_entry.id bekommen
+
+        db.session.commit()
+
+        return redirect(url_for('Mainpage'))
+
+    return render_template('projects.html', title="Create New Project")
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -131,12 +150,18 @@ def stream():
     def generate():
         with app.app_context():
             dic = []
-            initial_pull = Entry.query.order_by(Entry.created_at.desc()).limit(20).all()
+            initial_pull = Entry.query.order_by(Entry.created_at.asc()).limit(20).all()
             if initial_pull:
                 last_id = max(initial_pull, key=lambda p: p.id).id
                 for entry in initial_pull:
                             image_urls = [f"/image/{image.id}" for image in entry.images]
-                            dic.append({"Titel": entry.title, "Text": entry.text, "Image": image_urls})
+                            dic.append({
+                                "Titel": entry.title,
+                                "Text": entry.text,
+                                "Image": image_urls,
+                                "CreatedAt": entry.created_at.strftime('%d.%m.%Y %H:%M'),
+                                "Username": entry.owner_user.username,
+                                           })
                 yield f"data: {json.dumps(dic)}\n\n"
             else:
                 last_id = 0
@@ -144,7 +169,7 @@ def stream():
             while True:
                 db.session.expire_all()
                 dic = []
-                entries = Entry.query.filter(Entry.id > last_id).order_by(Entry.created_at.desc()).limit(20).all()
+                entries = Entry.query.filter(Entry.id > last_id).order_by(Entry.created_at.asc()).limit(20).all()
                 if entries:
                     last_id = max(entries, key=lambda e: e.id).id
                     for entry in entries:
