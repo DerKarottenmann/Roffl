@@ -15,6 +15,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
 app.secret_key = os.getenv("SKEY")
 db.init_app(app)
 migrate = Migrate(app, db)
+pw = os.getenv("DUMMY")
 
 
 @app.route('/')
@@ -63,7 +64,7 @@ def create_project():
 
         new_entry = Project(name=title, description=text, owner_id=user_id)
         db.session.add(new_entry)
-        db.session.flush()  # new_entry.id bekommen
+        ##db.session.flush()  # new_entry.id bekommen
 
         db.session.commit()
 
@@ -198,6 +199,25 @@ def reset_db():
     db.drop_all()
     db.create_all()
     print("Datenbank zurückgesetzt!")
+
+@app.cli.command("dummy")
+def dummy():
+    username = "Yan"
+    password = pw
+    email = "yan@gmail.com"
+
+    hashed_password = generate_password_hash(password)
+
+    new_user = User(
+            username=username,
+            email=email,
+            password_hash=hashed_password
+        )
+    db.session.add(new_user)
+    db.session.commit()
+
+    print("Dummy User created!")
+
 
 
 if __name__ == '__main__':
