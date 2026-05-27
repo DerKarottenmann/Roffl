@@ -23,9 +23,7 @@ def Mainpage():
     entries = Entry.query.order_by(Entry.created_at.desc()).limit(10).all()
     return render_template('index.html', entries=entries, title="Mainpage")
 
-@app.route('/description')
-def description():
-    return render_template('description.html', title="Description")
+
 
 @app.route('/create', methods=['GET', 'POST'])
 def create():
