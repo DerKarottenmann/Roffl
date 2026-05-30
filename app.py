@@ -27,6 +27,11 @@ def Mainpage():
 
 @app.route('/create_post', methods=['GET', 'POST'])
 def create_post():
+
+    user_id = session.get("user_id")
+    if not user_id:
+        return redirect(url_for('login'))
+
     if request.method == 'POST':
         if len(request.form['text']) < 25:
             flash("Text must be at least 25 characters long.")
@@ -34,7 +39,6 @@ def create_post():
         title = request.form['title']
         text = request.form['text']
         images = request.files.getlist('images')
-        user_id = session.get("user_id")
         project = session.get("project")
 
         new_entry = Entry(title=title, text=text, owner_id=user_id, created_at=db.func.now())

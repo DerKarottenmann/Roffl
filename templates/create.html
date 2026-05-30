@@ -25,6 +25,9 @@
         <label for="text">Select Project:</label>
         <select name="project_id" required>
             <option value="">-- Projekt wählen --</option>
+            {% for project in projects %}
+                <option value="{{ project.id }}">{{ project.name }}</option>
+            {% endfor %}
             <!--    options jinja2 -->
         </select>
         <br>
