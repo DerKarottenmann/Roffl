@@ -17,7 +17,7 @@
 
                 <!-- Bilder anzeigen -->
                 {% for image in entry.images %}
-                    <img src="/image/{{ image.id }}" class="feed-image">
+                    <img src="{{ url_for('get_image', image_id=image.id) }}" class="feed-image">
                 {% endfor %}
 
                 <small>Erstellt am: {{ entry.created_at.strftime('%d.%m.%Y %H:%M') }}</small>

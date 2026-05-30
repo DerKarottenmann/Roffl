@@ -25,12 +25,12 @@ def Mainpage():
 
 
 
-@app.route('/create', methods=['GET', 'POST'])
-def create():
+@app.route('/create_post', methods=['GET', 'POST'])
+def create_post():
     if request.method == 'POST':
         if len(request.form['text']) < 25:
             flash("Text must be at least 25 characters long.")
-            return redirect(url_for('create'))
+            return redirect(url_for('create_post'))
         title = request.form['title']
         text = request.form['text']
         images = request.files.getlist('images')
@@ -49,11 +49,13 @@ def create():
         db.session.commit()
 
         return redirect(url_for('Mainpage'))
+    
+    projects = Project.query.filter_by(owner_id=user_id).all()
 
-    return render_template('create.html', title="Create New Entry")
+    return render_template('create.html', projects=projects, title="Create New Entry")
 
 
-@app.route('/projects', methods=['GET', 'POST'])
+@app.route('/create_projects', methods=['GET', 'POST'])
 def create_project():
     if request.method == 'POST':
         title = request.form['title']

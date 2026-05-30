@@ -25,10 +25,10 @@
             {% if session.logged_in %}
                 <a class="prlink" href="#" id="user_dropdown">{{ session.username }}</a>
                 <div id="dropdown_menu" class="dropdown-menu">
-                    <a href="/create">Post</a>
-                    <a href="/statistics">Statistics</a>
-                    <a href="/logout">Logout</a>
-                    <a href="/projects">New Project</a>
+                    <a href="{{ url_for('create_post') }}">Post</a>
+                    <a href="{{ url_for('statistics') }}">Statistics</a>
+                    <a href="{{ url_for('logout') }}">Logout</a>
+                    <a href="{{ url_for('create_project') }}">New Project</a>
                 </div>
             {% else %}
                 <a class="prlink" href="{{ url_for('signup') }}">Sign Up</a>
