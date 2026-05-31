@@ -6,20 +6,29 @@
 <div class="stats-container">
     <h1>Statistics</h1>
     <h2>Projects</h2>
-    {% if entries %}
-        {% for entry in entries %}
+    {% if projects %}
+        {% for project in projects %}
             <details class="stats-item">
-                <summary>{{ entry.title }}</summary>
-                <p>{{ entry.text }}</p>
-                {% for img in entry.images %}
-                    <img src="{{ url_for('get_image', image_id=img.id) }}" class="feed-image">
-                {% endfor %}
-
-                <small>Erstellt am: {{ entry.created_at.strftime('%d.%m.%Y %H:%M') }}</small>
+                <summary>{{ project.name }}</summary>
+                <p>{{ project.description }}</p>
             </details>
         {% endfor %}
+        
     {% else %}
-        <p class="stats-empty">Noch keine Posts</p>
+        <p class="stats-empty">Noch keine Projekte</p>
     {% endif %}
 </div>
 {% endblock %}
+
+
+<!-- {% for entry in entries %}
+        <details class="stats-item">
+            <summary>{{ entry.title }}</summary>
+            <p>{{ entry.text }}</p>
+            {% for img in entry.images %}
+                <img src="{{ url_for('get_image', image_id=img.id) }}" class="feed-image">
+            {% endfor %}
+
+            <small>Erstellt am: {{ entry.created_at.strftime('%d.%m.%Y %H:%M') }}</small>
+        </details>
+    {% endfor %} -->

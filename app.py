@@ -144,9 +144,9 @@ def get_image(image_id):
 def statistics():
     if not session.get("logged_in"):
         return redirect(url_for("login"))
-    entries = Entry.query.filter_by(owner_id=session.get("user_id")).order_by(Entry.created_at.desc()).all()
+    projects = Project.query.filter_by(owner_id=session.get("user_id")).all()
 
-    return render_template('statistics.html', entries=entries, title="Statistics")
+    return render_template('statistics.html', projects=projects, title="Statistics")
 
 
 @app.route('/stream')
