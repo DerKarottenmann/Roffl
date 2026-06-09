@@ -114,7 +114,50 @@
 
 - Statistics Grundlagen gebaut
 
-## 8.Mai
+## 7. Mai 2026
 
-- Statistics weitergebaut
-- CSS
+- Kleinere CSS-/Layout-Iterationen an Statistics und Stylesheet.
+
+## 9. Mai 2026
+
+- Statistics-Skeleton ausgebaut: neue Route-Grundlage in `app.py`, Anzeige in `index.html` angepasst.
+- Größere CSS-Überarbeitung in `static/style/main.css` (~165 Zeilen): Design-Tokens via CSS-Variablen, Karten-Layout, Hover-/Shadow-System für Feed-Items.
+- Erste Anpassungen am SSE-Client in `static/js/main.js`.
+
+## 11. Mai 2026
+
+- **`Project`-Modell eingeführt (`models.py`):** neues Modell mit `name`, `description`, `owner_id`; `Entry` bekommt FK `project_id` (nullable); `User`–`Project`–`Entry`-Relationen über Backrefs.
+- Neue Route `/create_projects` (`app.py`) + neues Template `templates/projects.html` zum Anlegen von Projekten.
+- `create.html` zeigt Projekt-Auswahl beim Erstellen eines Posts.
+- Login-Template (`login.html`) erweitert; CSS-Feintuning.
+
+## 17. Mai 2026
+
+- Flask-CLI-Befehl `flask dummy` ergänzt: legt einen Test-User „Yan" mit Passwort aus `.env` (`DUMMY`) an — beschleunigt das lokale Testen.
+
+## 27. Mai 2026
+
+- Struktur-Cleanup: ungenutztes Template `templates/description.html` entfernt; kleinere Konsolidierungen in `base.html`, `index.html`, `logout.html`, `statistics.html` und `app.py`.
+
+## 30. Mai 2026
+
+- `pr_backup`: breiter Zwischenstand vor weiteren Refactorings (Top-Leiste, Create-Form, Index-Feed, Statistics).
+- **Projekte im Post-Formular auswählbar gemacht:** `<select name="project_id">` mit allen eigenen Projekten als Optionen (`create.html`), Server liest die Auswahl in `create_post`. ⚠️ Der gewählte `project_id` wurde aber zunächst nicht am `Entry` gespeichert (Bug) — gefixt am 9. Juni.
+
+## 31. Mai 2026
+
+- Statistics-Seite zeigt eigene Projekte (Skeleton): `<details>`-Akkordeon pro Projekt mit Name + Description (`statistics.html`), Route filtert nach `owner_id`.
+
+## 9. Juni 2026
+
+- **Bug-Fix in `create_post` (`app.py`):** beim Speichern eines neuen `Entry` wurde `project_id` ignoriert (Code las fälschlich `session.get("project")` statt aus dem Formular). Jetzt korrekt: `project = request.form.get('project_id') or None` → Posts sind tatsächlich mit ihrem Projekt verknüpft, Empty-String wird zu `NULL` (FK-sauber).
+- **Statistics-Seite komplett umgebaut:**
+  - Route erweitert um `total_posts` und `total_images` (server-seitige Aggregation).
+  - Dashboard-Zeile mit 3 Stat-Kacheln (Projekte / Posts / Bilder).
+  - `<details>`-Akkordeon entfernt; stattdessen 2-spaltiges Karten-Grid (`auto-fill, minmax(320px, 1fr)`).
+  - Pro Karte: Titel + 2-zeilig geclampte Description, runde Post-Count-Badge im Brand-Gradient, kompakte Post-Liste (Titel + Datum, einzeilig, Ellipsis).
+  - Empty-States für „keine Projekte" und „Projekt ohne Posts".
+  - Container-Breite von 680 px auf 1080 px erhöht.
+- CSS: Standard-`line-clamp` neben `-webkit-line-clamp` ergänzt (Vendor-Prefix-Warnung).
+- README deutlich erweitert: Tech-Stack, Datenmodell-Tabelle, Routen-Übersicht, CLI-Befehle, Frontend-Struktur, Sicherheits-Notes. „Was Roffl auszeichnet" mit den 8 Differenzierungs-Features (festes Post-Format, Timeline, Lösungs-Sektionen, Bots, Auto-Rating, Project-Blueprint, Challenges, Cooperation).
+- `todo.md` angelegt mit priorisierter Roadmap.

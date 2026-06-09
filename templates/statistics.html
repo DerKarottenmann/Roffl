@@ -1,25 +1,56 @@
-{%extends "base.html" %}
+{% extends "base.html" %}
 
 {% block title %}Statistics{% endblock %}
 
 {% block content %}
 <div class="stats-container">
-    <h1>Statistics</h1>
-    <h2>Projects</h2>
-    {% if entries %}
-        {% for entry in entries %}
-            <details class="stats-item">
-                <summary>{{ entry.title }}</summary>
-                <p>{{ entry.text }}</p>
-                {% for img in entry.images %}
-                    <img src="{{ url_for('get_image', image_id=img.id) }}" class="feed-image">
-                {% endfor %}
+    <header class="stats-header">
+        <h1>Your Projects</h1>
+        <div class="stats-summary">
+            <div class="stat-tile">
+                <span class="stat-tile-value">{{ projects|length }}</span>
+                <span class="stat-tile-label">Projekte</span>
+            </div>
+            <div class="stat-tile">
+                <span class="stat-tile-value">{{ total_posts }}</span>
+                <span class="stat-tile-label">Posts</span>
+            </div>
+            <div class="stat-tile">
+                <span class="stat-tile-value">{{ total_images }}</span>
+                <span class="stat-tile-label">Bilder</span>
+            </div>
+        </div>
+    </header>
 
-                <small>Erstellt am: {{ entry.created_at.strftime('%d.%m.%Y %H:%M') }}</small>
-            </details>
-        {% endfor %}
+    {% if projects %}
+        <div class="project-grid">
+            {% for project in projects %}
+                <article class="project-card">
+                    <header class="project-card-header">
+                        <div class="project-card-titles">
+                            <h2>{{ project.name }}</h2>
+                            <p class="project-description">{{ project.description }}</p>
+                        </div>
+                        <span class="project-count">{{ project.posts|length }}</span>
+                    </header>
+
+                    {% if project.posts %}
+                        <ul class="project-post-list">
+                            {% for post in project.posts|sort(attribute='created_at', reverse=True) %}
+                                <li class="project-post">
+                                    <span class="project-post-title">{{ post.title }}</span>
+                                    <span class="project-post-date">{{ post.created_at.strftime('%d.%m.%Y') }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="project-empty">Noch keine Posts.</p>
+                    {% endif %}
+                </article>
+            {% endfor %}
+        </div>
     {% else %}
-        <p class="stats-empty">Noch keine Posts</p>
+        <p class="stats-empty">Noch keine Projekte</p>
     {% endif %}
 </div>
 {% endblock %}

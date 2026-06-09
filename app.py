@@ -38,10 +38,15 @@ def create_post():
             return redirect(url_for('create_post'))
         title = request.form['title']
         text = request.form['text']
+        project = request.form.get('project_id') or None
         images = request.files.getlist('images')
-        project = session.get("project")
 
-        new_entry = Entry(title=title, text=text, owner_id=user_id, created_at=db.func.now())
+        new_entry = Entry(
+            title=title, text=text,
+            owner_id=user_id,
+            project_id=project,                        # neu
+            created_at=db.func.now()
+            )
         db.session.add(new_entry)
         db.session.flush()  # new_entry.id bekommen
 
@@ -144,9 +149,17 @@ def get_image(image_id):
 def statistics():
     if not session.get("logged_in"):
         return redirect(url_for("login"))
-    entries = Entry.query.filter_by(owner_id=session.get("user_id")).order_by(Entry.created_at.desc()).all()
+    projects = Project.query.filter_by(owner_id=session.get("user_id")).all()
+    total_posts = sum(len(p.posts) for p in projects)
+    total_images = sum(len(post.images) for p in projects for post in p.posts)
 
-    return render_template('statistics.html', entries=entries, title="Statistics")
+    return render_template(
+        'statistics.html',
+        projects=projects,
+        total_posts=total_posts,
+        total_images=total_images,
+        title="Statistics",
+    )
 
 
 @app.route('/stream')
